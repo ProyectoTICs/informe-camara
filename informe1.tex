@@ -1,0 +1,745 @@
+\documentclass[twocolumn,11pts]{IEEEtran}
+% packages to make the language spanish
+\usepackage[spanish,es-lcroman,es-tabla,es-nosectiondot]{babel}
+\decimalpoint% changes the coma in the numbers to period
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{csquotes}
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+% *** CAPTION ***
+\usepackage[font=footnotesize,labelfont=bf,labelsep=period]{caption}
+
+% *** CITATION PACKAGES ***
+%
+\usepackage{cite}
+%
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
+% not currently provide for hyperlinked citations.
+% The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
+% The documentation is contained in the cite.sty file itself.
+
+% Bibliografia para este documento
+% Se incluye embebida para poder transportarla en el mismo documento. Sin embargo,
+% en sus documentos puede tener esta información en el archivo *.bib.
+% Consecuentemente, no necesita el uso del paquete filecontents.
+\usepackage{filecontents}
+\begin{filecontents}{guia.bib}
+% note el uso de las llaves {} para escapar la instrucción \LaTeX dentro del título del artículo
+@ARTICLE{Downes2002,
+  title = {Short Math Guide for {\LaTeX}},
+  author = {Michael Downes},
+  year = {2002},
+  url = {ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf}
+}
+\end{filecontents}
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+% \usepackage[pdftex]{graphicx}
+% declare the path(s) where your graphic files are
+% \graphicspath{{../pdf/}{../jpeg/}}
+% and their extensions so you won't have to specify these with
+% every instance of \includegraphics
+% \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+%
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at: 
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
+% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+% *** MATH PACKAGES ***
+%
+%\usepackage[cmex10]{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics. If using
+% it, be sure to load this package with the cmex10 option to ensure that
+% only type 1 fonts will utilized at all point sizes. Without this option,
+% it is possible that some math symbols, particularly those within
+% footnotes, will be rendered in bitmap form which will result in a
+% document that can not be IEEE Xplore compliant!
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}% Algorithm -> Algoritmo
+\makeatother
+\captionsetup[algorithm]{font=footnotesize,labelsep=period}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
+% There is also a support site at:
+% http://algorithms.berlios.de/index.html
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
+
+\usepackage{listings}
+\usepackage{tikz}
+\lstset{
+  language=[LaTeX]TeX,
+  breaklines=true,
+  basicstyle=\tt\scriptsize,
+  keywordstyle=\color{blue},
+  identifierstyle=\color{magenta},
+  commentstyle=\color{green!40!black},
+  % frame 
+  frame=tb,
+  captionpos=t,
+  xleftmargin=1em,
+  numbersep=0.3em,
+  numbers=left,
+  framexleftmargin=1.1em,
+  framexrightmargin=0pt,
+  % additional letters for accents in spanish
+  literate=%
+    {á}{{\'{a}}}1
+    {é}{{\'{e}}}1
+    {í}{{\'{i}}}1
+    {ó}{{\'{o}}}1
+    {ú}{{\'{u}}}1
+    {ñ}{{\~{n}}}1
+    {Ñ}{{\~{N}}}1
+}
+
+\renewcommand{\lstlistingname}{Código}% Listing -> Código
+\DeclareCaptionFormat{listing}{\rule{\dimexpr\linewidth\relax}{0.4pt}\par\vskip1pt#1#2#3}
+\captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt,position=bottom}
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
+% especially mdwmath.sty and mdwtab.sty which are used to format equations
+% and tables, respectively. The MDWtools set is already installed on most
+% LaTeX systems. The lastest version and documentation is available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+%\usepackage{eqparbox}
+% Also of notable interest is Scott Pakin's eqparbox package for creating
+% (automatically sized) equal width boxes - aka "natural width parboxes".
+% Available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
+
+
+% *** SUBFIGURE PACKAGES ***
+%\usepackage[tight,footnotesize]{subfigure}
+% subfigure.sty was written by Steven Douglas Cochran. This package makes it
+% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
+% work, it is a good idea to load it with the tight package option to reduce
+% the amount of white space around the subfigures. subfigure.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at:
+% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
+% subfigure.sty has been superceeded by subfig.sty.
+
+
+%\usepackage[caption=false]{caption}
+%\usepackage[font=footnotesize]{subfig}
+% subfig.sty, also written by Steven Douglas Cochran, is the modern
+% replacement for subfigure.sty. However, subfig.sty requires and
+% automatically loads Axel Sommerfeldt's caption.sty which will override
+% IEEEtran.cls handling of captions and this will result in nonIEEE style
+% figure/table captions. To prevent this problem, be sure and preload
+% caption.sty with its "caption=false" package option. This is will preserve
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
+% (recommended due to many improvements over 1.2) of subfig.sty supports
+% the caption=false option directly:
+\usepackage[caption=false,font=footnotesize]{subfig}
+%
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+% The latest version and documentation of caption.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure. The latest version and documentation can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/base/
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
+% Documentation is contained in the stfloats.sty comments as well as in the
+% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
+% does not allow \baselineskip to stretch. Authors submitting work to the
+% IEEE should note that IEEE rarely uses double column equations and
+% that authors should try to avoid such use. Do not be tempted to use the
+% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
+% not format its papers in such ways.
+
+%\ifCLASSOPTIONcaptionsoff
+%  \usepackage[nomarkers]{endfloat}
+% \let\MYoriglatexcaption\caption
+% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
+%\fi
+% endfloat.sty was written by James Darrell McCauley and Jeff Goldberg.
+% This package may be useful when used in conjunction with IEEEtran.cls'
+% captionsoff option. Some IEEE journals/societies require that submissions
+% have lists of figures/tables at the end of the paper and that
+% figures/tables without any captions are placed on a page by themselves at
+% the end of the document. If needed, the draftcls IEEEtran class option or
+% \CLASSINPUTbaselinestretch interface can be used to increase the line
+% spacing as well. Be sure and use the nomarkers option of endfloat to
+% prevent endfloat from "marking" where the figures would have been placed
+% in the text. The two hack lines of code above are a slight modification of
+% that suggested by in the endfloat docs (section 8.3.1) to ensure that
+% the full captions always appear in the list of figures/tables - even if
+% the user used the short optional argument of \caption[]{}.
+% IEEE papers do not typically make use of \caption[]'s optional argument,
+% so this should not be an issue. A similar trick can be used to disable
+% captions of packages such as subfig.sty that lack options to turn off
+% the subcaptions:
+% For subfig.sty:
+% \let\MYorigsubfloat\subfloat
+% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
+% For subfigure.sty:
+% \let\MYorigsubfigure\subfigure
+% \renewcommand{\subfigure}[2][\relax]{\MYorigsubfigure[]{#2}}
+% However, the above trick will not work if both optional arguments of
+% the \subfloat/subfig command are used. Furthermore, there needs to be a
+% description of each subfigure *somewhere* and endfloat does not add
+% subfigure captions to its list of figures. Thus, the best approach is to
+% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
+% and instead reference/explain all the subfigures within the main caption.
+% The latest version of endfloat.sty and its documentation can obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/endfloat/
+%
+% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
+% later in the document, say, to conditionally put the References on a 
+% page by themselves.
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
+% Read the url.sty source comments for usage information. Basically,
+% \url{my_url_here}.
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+% this should be the latest package to load (unless you find an exception or 
+% clash between packages)
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=false,       % false: boxed links; true: colored links
+  pdfborder={0 0 0}       % remove ugly border from links
+}
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+% Patch for the \label command on showexpl
+\let\orilabel\label
+
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Informe 1 Proyectos TICs}
+%
+
+\author{Daniel Méndez - Felipe Rios - Carlos Martínez - Luis Cáceres\thanks{Escuela de Informática y Telecomunicaciones}% <-this % stops a space
+\thanks{e-mail: adin.ramirez@mail.udp.cl.}% <-this % stops a space
+}
+% note the % following \thanks
+% these prevent an unwanted space from occurring between the last author name
+% and the end of the author line. i.e., if you had this:
+% 
+% \author{....lastname \thanks{...} \thanks{...} }
+%                     ^------------^------------^----Do not want these spaces!
+%
+% a space would be appended to the last name and could cause every name on that
+% line to be shifted left slightly. This is one of those "LaTeX things". For
+% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
+% "AB" then you have to do: "\textbf{A}\textbf{B}"
+% \thanks is no different in this regard, so shield the last } of each \thanks
+% that ends a line with a % and do not let a space in before the next \thanks.
+% Spaces after \IEEEmembership other than the last one are OK (and needed) as
+% you are supposed to have spaces between the names. For what it is worth,
+% this is a minor point as most people would not even notice if the said evil
+% space somehow managed to creep in.
+
+
+% The paper headers
+\markboth{Escuela de Informática y Telecomunicaciones}%
+{Informe}%<- this part will appear only with the twoside option in the documentclass
+% The only time the second header will appear is for the odd numbered pages
+% after the title page when using the twoside option.
+
+% make the title area
+\maketitle
+
+
+\begin{abstract}
+A partir de este documento indicaremos la planificación del proyecto que nos solicitó el cliente, en base a sus requerimientos debemos lograr un programa que algorítmicamente nos permita una equivalencia de gastos entre compañeros de un trabajo en la compra de café, teniendo como una de las principales problemáticas a superar la variable de ausencia de alguna persona independiente del motivo que por consecuencia no pagará café ese día.
+\end{abstract}
+
+\section{Introducción}
+
+Este informe pretende un adelanto de los requerimientos presentes en el desarrollo de la aplicación solicitada; en otras palabras, veremos el “qué es necesario” en la elaboración de nuestro programa, ya sea desde las preguntas a fin, hasta las funciones necesarias para el caso.
+Para poder generar los requerimientos necesarios, hay que tener en cuenta el problema objetivo: 
+Encuestas en clase de manera anónima, además debe de presentar los resultados de manera automática de manera sencilla y usable para poder realizar preguntas de manera sencilla.
+
+\section{Secciones principales de un documento técnico}
+
+\subsection{Resumen}
+
+
+\subsection{Introducción}
+
+\subsection{Marco Teorico}
+
+
+\subsection{Requerimientos}
+
+\subsection{Análisis y Diseño}
+
+\subsection{Planificación}
+
+\subsection{Conclusiones}
+
+
+\section{Elementos flotantes}
+
+En general las figuras, tablas, código, entre otros, son elementos de ayuda y aclaración. Por lo tanto, éstos deben existir referidos desde el texto, que establece el contexto en el que existen. Además, todos estos elementos no deben de interrumpir el flujo del texto (que es el principal elemento en el documento). De tal forma, cualquiera de éstos debe estar en el tope o en el fondo de las páginas, y/o columnas. De ahí que se les denomina elementos flotantes, ya que \emph{flotan} dentro del texto a dichas posiciones. 
+
+La leyenda de un elemento flotante debe de explicar de manera concreta lo que se observa en él, mientras que los detalles deben estar en el texto donde se le refirió. Note que todo elemento flotante debe estar referido necesariamente en el texto, ya que no puede existir en el vacío.
+
+
+\subsection{Figuras}
+\label{sec:figuras}
+
+Puede generar figuras que ocupen una columna (ver Figura~\ref{fig:sim}) o dos (ver Figura~\ref{fig:twocol}). Los Códigos~\ref{cod:sim} y~\ref{cod:twocol} muestran las instrucciones en \LaTeX\ que generan las figuras. Utilice la posición de las figuras al tope (opción \texttt{t}) o al fondo de la página (opción \texttt{b}). Evite, en lo posible, utilizar la opción que obliga a la figura a aparecer donde es declarada (opciones \texttt{h} y \texttt{H}).
+
+La descripción de las figuras esta abajo de lo que se despliegue en ellas. Utilice una descripción corta y concisa de lo que se observa, y del punto que quería extender con la figura.
+
+\begin{figure}[t]% prefiera la posición arriba (t) para las figuras
+  \centering
+  % incluya las figuras utilizando el comando de abajo
+  % note que la extensión es asumida pro latex,
+  % y que .pdf será asumido por pdflatex; o cualquier otra cosa
+  % declarada vía \DeclareGraphicsExtensions.
+  % \includegraphics[width=0.8\linewidth]{myfigure}
+  \rule{0.8\linewidth}{2cm}
+  \caption{Ejemplo de figura de una columna (y el c\'odigo que lo produce arriba).}
+  % genere las etiquetas para referencias a las figuras
+  % utilice identificadores que le ayuden a diferenciar figuras, tablas,
+  % y otras entidades (por ejemplo, fig:)
+  \label{fig:sim}
+\end{figure}
+
+\begin{lstlisting}[float=tb,caption={Código que produce la Figura~\ref{fig:sim}.},label=cod:sim]
+\begin{figure}[t]% prefiera la posición arriba (t) para las figuras
+  \centering
+  % incluya las figuras utilizando el comando de abajo
+  % note que la extensión es asumida pro latex,
+  % y que .pdf será asumido por pdflatex; o cualquier otra cosa
+  % declarada vía \DeclareGraphicsExtensions.
+  % \includegraphics[width=0.8\linewidth]{myfigure}
+  \rule{0.8\linewidth}{2cm}
+  \caption{Ejemplo de figura de una columna (y el c\'odigo que lo produce arriba).}
+  % genere las etiquetas para referencias a las figuras
+  % utilice identificadores que le ayuden a diferenciar figuras, tablas,
+  % y otras entidades (por ejemplo, fig:)
+  \label{fig:sim}
+\end{figure}
+\end{lstlisting}
+
+
+% Un ejemplo de un elemento flotante en doble columna utilizando dos subfiguras.
+% (El paquete subfig.sty debe estar cargado para que funcione.)
+% El comando \label de la subfigura está dentro de cada elemento subfloat,
+% la \label de cada figura debe estar después de \caption.
+% El paquete subfigure.sty trabaja de la misma manera, excepto que utiliza
+% \subfigure en lugar de \subfloat.
+%
+\begin{figure*}[bt]% en este ejemplo preferimos abajo (b) antes que el tope (t)
+\centering
+\subfloat[Case I]{%<- detiene espacios espuria
+  \rule{5cm}{5cm}
+  \label{fig:first_case}
+}%
+\subfloat[Case II]{%
+  \rule{5cm}{6cm}
+  \label{fig:second_case}
+}
+\caption{Ejemplo de dos figuras lado y lado que ocupa las dos columnas.}
+\label{fig:twocol}
+\end{figure*}
+
+\begin{lstlisting}[float=tb,caption={Código que produce la Figura~\ref{fig:twocol}.},label=cod:twocol]
+\begin{figure*}[bt]% en este ejemplo preferimos abajo (b) antes que el tope (t)
+\centering
+\subfloat[Case I]{%<- detiene espacios espuria
+  \rule{5cm}{5cm}
+  \label{fig:first_case}
+}%
+\subfloat[Case II]{%
+  \rule{5cm}{6cm}
+  \label{fig:second_case}
+}
+\caption{Ejemplo de dos figuras lado y lado que ocupa las dos columnas.}
+\label{fig:twocol}
+\end{figure*}
+\end{lstlisting}
+
+
+\subsection{Tablas}
+
+Para la creación de tablas utilice los mismos lineamientos de las figuras en su posicionamiento---ver Sección~\ref{sec:figuras}. Vea el ejemplo de la Tabla~\ref{tab:data} (y Código~\ref{cod:data}). Sin embargo, la principal diferencia es que la leyenda de las tablas es posicionada sobre la tabla, no abajo como en las figuras.
+
+Evite el uso de reglas verticales en las tablas. Adicionalmente, note el uso de \verb|\hline\noalign{\smallskip}| (en el Código~\ref{cod:data}) para generar las reglas horizontales (compare el uso de \verb|\noalign{\smallskip}| y la ausencia del mismo). Esta instrucción agrega un espacio vertical menor después de la regla para generar un mejor espaciado. Puede utilizarla después de reglas horizontales como en el ejemplo para generar una tabla más placentera visualmente.
+
+\begin{table}[t]% preferimos la opción de arriba
+\caption{Nombre interesante de algunos datos.}% note que el caption va al inicio del ambiente en las tablas
+\label{tab:data}% y la etiqueta después del caption
+\centering
+\begin{tabular}{cc}
+\hline\noalign{\smallskip}%for lines with text under, prefer this version with \noalign
+\textbf{Texto 1} & \textbf{Texto 2}\\
+\hline\noalign{\smallskip}
+Uno & Dos\\
+Tres & Cuatro\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{lstlisting}[float=tb,caption={Código que produce la Tabla~\ref{tab:data}.},label=cod:data]
+\begin{table}[t]% preferimos la opción de arriba
+\caption{Nombre interesante de algunos datos.}% note que el caption va al inicio del ambiente en las tablas
+\label{tab:data}% y la etiqueta después del caption
+\centering
+\begin{tabular}{cc}
+\hline\noalign{\smallskip}%for lines with text under, prefer this version with \noalign
+\textbf{Header 1} & \textbf{Header 2}\\
+\hline\noalign{\smallskip}
+One & Two\\
+Three & Four\\
+\hline
+\end{tabular}
+\end{table}
+\end{lstlisting}
+
+\subsection{Código}
+
+Para presentar código utilice el paquete \texttt{listings.sty}, que provee el ambiente \texttt{lstlisting} para la presentación de código en distintos lenguajes. Para presentar el código utilice los mismos lineamientos de otros elementos flotantes---ver Sección~\ref{sec:figuras}. Se presenta un ejemplo en el Código~\ref{cod:c}, y las instrucciones que lo generan en Código~\ref{cod:codc}. Para hacer que el ambiente \texttt{lstlisting} flote debe de colocar la opción \texttt{float} en los parámetros del mismo.
+
+\begin{lstlisting}[float,language=C++,caption={Ejemplo de un programa simple.},label=cod:c]
+// Ejemplo de un programa en C++
+#include<iostream>
+
+int main{
+  std::cout << "Hola LaTeX\n";
+}
+\end{lstlisting}
+
+% Note el uso de $$ para cambiar el comando '\end{lstlisting}' a dos separados
+% \end y {lstlisting} para que se interprete correctamente. Esto no es necesario
+% en otro tipo de código, sino para el uso de lstlisting anidados. 
+% Fuente: http://tex.stackexchange.com/a/31986/7561
+\begin{lstlisting}[float=tb,caption={Código que produce el Código~\ref{cod:c}.},label=cod:codc,mathescape=true]
+\begin{lstlisting}[float,language=C++,caption={Ejemplo de un programa simple.},label=cod:c]
+// Ejemplo de un programa en C++
+#include<iostream>
+
+int main{
+  std::cout << "Hola LaTeX\n";
+}
+\end$${lstlisting}
+\end{lstlisting}
+
+Adicionalmente, pueden colocar las instrucciones mostradas en el Código~\ref{cod:lst} en el preámbulo del documento (antes de \verb|\begin{document}|) para poder configurar el despliegue de estos ambientes de manera similar a este documento.
+
+\begin{lstlisting}[float=tb,caption={Instrucciones que configuran el paquete \texttt{listings.sty}.},label=cod:lst]
+\usepackage[font=footnotesize,labelfont=bf,labelsep=period]{caption}
+\renewcommand{\lstlistingname}{Código}% Listing -> Código
+\DeclareCaptionFormat{listing}{\rule{\dimexpr\linewidth\relax}{0.4pt}\par\vskip1pt#1#2#3}
+\captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt,position=bottom}
+\end{lstlisting}
+
+\subsection{Algoritmos}
+
+De manera similar al código, usted puede incluir algoritmos en sus documentos como elementos flotantes. Para este fin, se recomienda utilizar el paquete \texttt{algorithmicx.sty}. De tal forma, se debe incluir los paquetes:
+\begin{lstlisting}[frame=none,numbers=none,basicstyle=\tt\normalsize]
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\end{lstlisting}
+y posteriormente utilizarlo como en el Algoritmo~\ref{alg:fac} (Código~\ref{cod:fac}).
+
+\begin{algorithm}[t]
+  \caption{Ejemplo de un algoritmo.}
+  \label{alg:fac}
+  \begin{algorithmic}[1]
+    \Function{Factorial}{$n$}\Comment{Calcula factorial}
+    \If {$n < 1$}
+      \State \textbf{return} $n*\Call{Factorial}{n-1}$
+    \Else
+      \State \textbf{return} $1$
+    \EndIf
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{lstlisting}[float=tb,caption={Código que genera el Algoritmo~\ref{alg:fac}.},label=cod:fac]
+\begin{algorithm}[t]
+  \caption{Ejemplo de un algoritmo.}
+  \label{alg:fac}
+  \begin{algorithmic}[1]
+    \Function{Factorial}{$n$}\Comment{Calcula factorial}
+    \If {$n < 1$}
+      \State \textbf{return} $n*\Call{Factorial}{n-1}$
+    \Else
+      \State \textbf{return} $1$
+    \EndIf
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+\end{lstlisting}
+
+\section{Notas en el uso de \LaTeX}
+\subsection{Escritura de matemática}
+El escribir matemática es similar al escribir en español. Los símbolos son representaciones compactas de las relaciones y de las variables involucradas. Por ende, cuando se escribe matemática dentro del texto las ecuaciones y símbolos deben fluir en el texto de la misma manera que las oraciones fluyen dentro de los párrafos.
+
+Por ejemplo, si quiero explicar el uso de la recta, definida por
+\begin{equation}
+y = ax + b,
+\end{equation}
+donde $x$ y $y$ son las variables de la recta, y $a$ y $b$ son la pendiente y la ordenada al origen, respectivamente. Utilizo el ambiente \verb|equation| para poder escribir la ecuación de la recta, y termino la ecuación utilizando una coma para permitir que fluyan las ideas. Sin embargo, los símbolos que se escriben dentro del texto (en linea) deben de delimitarse utilizando el operador \verb|$...$|. Note, además, que el texto luego de la ecuación esta dentro del párrafo (no está indentada, y empieza con minúscula) al evitar cambios de linea en el código fuente.
+
+Para mayor profundidad en el tema revise la documentación de la sociedad Matemática Americana~\cite{Downes2002}.
+
+\subsection{Correcto uso de espacios duros}
+Note en el ejemplo anterior (Sección~\ref{sec:figuras}) que las referencias utilizan una tilde (\verb|~|) para unir el identificador del elemento de referencia y la referencia misma. Este carácter genera un espacio en blanco que mantiene unido el identificador durante los cambios de linea. Utilícelo para todos los casos en que tenga palabras compuestas, por ejemplo, figuras, secciones, tablas, etc.
+
+Entonces, prefiera escribir \verb|Figura~\ref{id}| en lugar de la construcción \verb|Figura \ref{id}|; similarmente, al citar \verb|estudio~\cite{referencia}| en lugar de escribir \verb|estudio \cite{referencia}|.
+
+\subsection{Uso de etiquetas para referencias}
+Aunque \LaTeX\ no restringe el uso de identificadores en las etiquetas (argumento de \verb|\label{arg}|), se le aconseja el manejar prefijos dentro de sus etiquetas para el fácil entendimiento del código fuente. Por ejemplo, utilizar \texttt{fig:} para todas las figuras, \texttt{sec:} para las secciones, \texttt{tab:} para las tablas, y \texttt{equ:} para las ecuaciones. No es necesario que utilice éstas, pero puede darse una idea de como organizar sus documentos. \textbf{Sea consistente.}
+
+\section{Errores comunes de ortografía}
+A continuación se presentan errores comunes en el uso de palabras en el idioma español.
+
+\begin{itemize}
+%%%
+\item \textbf{Cual, cuál.} Cuál (con su correspondiente plural cuáles) se escribe con tilde diacrítica cuando tiene valor interrogativo (\ref{ex:cual-int}) o exclamativo (\ref{ex:cual-int}). También lleva tilde en oraciones interrogativas indirectas (\ref{ex:cual-int-ind}).
+\begin{enumerate}[\itshape]
+\item\label{ex:cual-int} ¿Cuáles son las principales causas a que puede atribuirse este nivel?\footnote{Francisco Giner de los Ríos: Escritos sobre la universidad española}
+\item\label{ex:cual-exc} ¡A cuál de los dos! ¡Elegir ella!\footnote{Maruxa Vilalta: Nada como el piso 16}
+\item\label{ex:cual-int-ind} No sé cuál será su estrategia, pero debes hacerle caso.\footnote{Luis Landero: Juegos de la edad tardía}
+\end{enumerate}
+
+Se escribe cual(es) sin tilde en los restantes casos. Normalmente funcionará como pronombre relativo. Presenta aquí una particularidad que lo diferencia de otros dobletes análogos como quién/quien, cuánto/cuanto, qué/que, etc.: es palabra tónica. Esto podría representar una dificultad para decidir cuándo escribirlo con tilde o sin ella. Sin embargo, no lo es tanto si tenemos en cuenta que siempre aparecerá entonces precedido del artículo: el cual, la cual, lo cual, los cuales y las cuales. Veamos un par de ejemplos:
+\begin{enumerate}[\itshape]
+\item[]  [\dots] sentí resquebrajarse el suelo incierto sobre el cual me movía\footnote{Ernesto Sabato: Antes del fin.}
+\item[]  [\dots] manoteó la cortina tras la cual se ocultaba el cartero\footnote{Antonio Skármeta: El cartero de Neruda}
+\end{enumerate}
+
+La Ortografía de la lengua española de 2010 nos indica algunas expresiones en las que también es tónico, pero, por carecer de valor interrogativo o exclamativo, se escribe sin tilde, concretamente, cada cual (\ref{ex:cual-1}), que si tal, que si cual (\ref{ex:cual-2}), tal cual (\ref{ex:cual-3}), tal para cual (\ref{ex:cual-4}), un tal y un cual (\ref{ex:cual-5}):
+\begin{enumerate}[\itshape]
+\item\label{ex:cual-1} Como se ama siempre: cada cual tiene un modo\footnote{Antonio Gala: ¿Por qué corres, Ulises?}
+\item\label{ex:cual-2} Se lo dices y empiezan que si tal que si cual\footnote{José Luis Alonso de Santos: Bajarse al moro}
+\item\label{ex:cual-3} Todo me inducía a conservar tal cual ese retrato de Johnny\footnote{Julio Cortázar: El perseguidor y otros cuentos}
+\item\label{ex:cual-4} También yo soy un aburrido, somos tal para cual\footnote{Álvaro Pombo: El metro de platino iridiado}
+\item\label{ex:cual-5} Todos convenían en que era un ladrón, un farsante, un estafador, un tal y un cual\footnote{Javier Salvago: Memorias de un antihéroe}
+\end{enumerate}
+
+Tampoco se acentúa gráficamente cuando se puede sustituir por como:
+\begin{enumerate}[\itshape]
+\item[] Ella traía una de las faldas que cual capas concéntricas acebolladas la recubrían\footnote{Luis Martín Santos: Tiempo de silencio}
+\end{enumerate}
+
+%%%
+\item \textbf{Esta, ésta, está.} La palabra ésta lleva tilde cuando funciona como pronombre demostrativo, 
+\begin{enumerate}[\itshape]
+\item[] Ésta es mi casa.
+\item[] Ésta es mi hija.
+\end{enumerate}
+
+Cuando funciona como adjetivo demostrativo, no lleva tilde: esta. Por ejemplo,
+\begin{enumerate}[\itshape]
+\item[] Esta casa es muy antigua.
+\item[] Esta pregunta es muy difícil.
+\end{enumerate}
+
+Está---tercera persona del presente de indicativo del verbo ``estar''. Por ejemplo, 
+\begin{enumerate}[\itshape]
+\item[] María está contenta.
+\end{enumerate}
+
+%%%
+\item \textbf{Mas, más.} Más se escribe con tilde diacrítica cuando tiene valor comparativo (\ref{ex:mas-comp}) o cuando expresa la idea de ``suma'' (\ref{ex:mas-suma}).
+\begin{enumerate}[\itshape]
+\item\label{ex:mas-comp} Estás más joven que nunca.
+\item\label{ex:mas-suma} Dos más dos son cuatro.
+\end{enumerate}
+
+En cambio, se escribe sin tilde cuando funciona como conjunción adversativa:
+\begin{enumerate}[\itshape]
+\item[] Les ofreció casa y cena, mas no quisieron ellos aceptar.
+\end{enumerate}
+
+Normalmente reconoceremos este uso porque admitirá la sustitución por ``pero'' o, más raramente, por ``sino''.
+
+%%%
+\item \textbf{Que, qué.} Qué se escribe con tilde diacrítica al ser interrogavito (\ref{ex:que-int}) o exclamativo (\ref{ex:que-ex}).
+\begin{enumerate}[\itshape]
+\item\label{ex:que-int} ¿Qué tipo de pregunta es esa?
+\item\label{ex:que-ex} ¡Qué cosas se te ocurren al escribir de esa forma!
+\end{enumerate}
+También puede encontrase precediendo una preposición, por ejemplo,
+\begin{enumerate}[\itshape]
+\item[] Estimado, ¿por qué no leíste el documento?
+\item[] ¿Y para qué quería escribir mal?
+\item[] ¡De qué manera se les puede enseñar!
+\end{enumerate}
+El qué acentuado también aparece en oraciones interrogativas (\ref{ex:que-int-ind1} y~\ref{ex:que-int-ind2}) y exclamativas (\ref{ex:que-ex-ind}).
+\begin{enumerate}[\itshape]
+\item\label{ex:que-int-ind1} Yo no se qué es lo que quieren los alumnos.
+\item\label{ex:que-int-ind2} Y con qué podrían comenzar a escribir.
+\item\label{ex:que-ex-ind} Necesitamos encontrar qué tanto saben.
+\end{enumerate}
+
+La tilde de los ejemplos anteriores sirve para diferenciar los usos interrogativos y exclamativos frente a dos homógrafos átonos: el relativo que (\ref{ex:que-rel}) y la conjunción que (\ref{ex:que-conj}).
+\begin{enumerate}[\itshape]
+\item\label{ex:que-rel} No les he contado de los trabajos que deje pasar.
+\item\label{ex:que-conj} Decidió que escribiría una guía en lugar de repetir el sermón diariamente.
+\end{enumerate}
+
+Note que el uso de la tilde puede cambiar el significado y la sintaxis de las mismas. Por ejemplo:
+\begin{enumerate}[\itshape]
+\item\label{ex:que-tilde} No tengo qué comer.
+\item\label{ex:que} No tengo que comer.
+\end{enumerate}
+La oración (\ref{ex:que-tilde}) significa \emph{carezco de alimento}, mientras que (\ref{ex:que}) se interpreta como \emph{no debo comer} o \emph{no me conviene}.
+
+%%%
+\item \textbf{Si, sí.} Si es una conjunción condicional que introduce la oración subordinada de la cláusula condicional (\ref{ex:si-cond}). También se utiliza cuando se asevera terminantemente (\ref{ex:si-asv}), o cuando se expresa deseo (\ref{ex:si-deseo}).
+\begin{enumerate}[\itshape]
+\item\label{ex:si-cond} Si lees este documento, escribirás muy bien.
+\item\label{ex:si-asv} Si ayer lo aseguraste, ¿cómo lo niegas hoy?
+\item\label{ex:si-deseo} ¡Si yo pudiera ayudarte!
+\end{enumerate}
+
+Sí con tilde es el pronombre personal (\ref{ex:si-pron}), es un adverbio de afirmación (\ref{ex:si-adv}), y es un sustantivo con valor de aprobación o asentimiento (\ref{ex:si-aprov}).
+\begin{enumerate}[\itshape]
+\item\label{ex:si-pron} Se lo ha comprado para sí.
+\item\label{ex:si-adv} Sí, quiero estudiar.
+\item\label{ex:si-aprov} En la comisión ganó el sí.
+\end{enumerate}
+
+\end{itemize}%itemize de ejemplos
+
+\section{Conclusión}
+Este documento no comprende todos los posibles casos, ni pretende hacerlo, de las reglas de redacción, ortografía, tipografía, y mejores prácticas en la elaboración de documentos. Es, en cambio, un ejemplo y una guía para iniciarlo en el uso de \LaTeX\ y de la escritura de documentos técnicos. 
+
+De tal forma, se le recomienda revisar distinta bibliografía y referencias para poder extender su conocimiento en la materia.
+
+% Referencias
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{IEEEabrv,guia.bib}
+
+% that's all folks
+% don't panic!
+\end{document}
+
+
