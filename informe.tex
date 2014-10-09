@@ -328,7 +328,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Votomatic}
+\title{Sistema de voactión por reconocimiento automático}
 %
 
 \author{Daniel Méndez - Felipe Rios - Carlos Martínez - Luis Cáceres
@@ -365,18 +365,108 @@
 
 
 \begin{abstract}
-Lo principal en este documento es dejar especificado los requerimientos, los análisis que hicimos de estos, el posterior desarrollo y finalmente fijar una planificación de las metas a cumplir por semana hasta llegada la fecha de entrega del proyecto. Para esto debemos obtener, analizar, documentar, verificar,y validar los requisitos del cliente (proyecto). En base a diagramas lograr una estructura a desarrollar para poder realizar una plataforma completa.
+La idea de este documento es dejar especificado los requerimientos, el análisis y diseño de los que se nos pide  y fijar una planificación de las metas a cumplir cada semana, hasta la fecha de entrega del producto final. Para esto debemos obtener, analizar, documentar, verificar y validar los requisitos del cliente. En base a diagramas lograr una estructura a desarrollar para poder realizar la plataforma tal como fue pedida.
 \end{abstract}
 
 \section{Introducción}
 
-En una primera instancia se dió la opción de decidir entre 4 proyectos distintos, pero con un enfoque claro en la recopilación de datos por medio de cámaras. Se eligió una de estas opciones, que consiste en el conteo de votos automático a mano alzada por medio de cámaras, este conteo puede ser anónimo o no, que a continuación será especificado mas detalladamente cuales son y como se desean implementar estos requerimientos.
+En una primera instancia se dió la opción de decidir entre 4 proyectos distintos, pero con un enfoque claro en la recopilación de datos por medio de cámaras, los cuales se analizaron detalladamente para decidir cual desarrollar, considerando el tiempo que tenemos, la composición del grupo y los gusto de cada integrante. Se eligió la opción que consiste en el conteo de votos automático a mano alzada, el cual puede ser anónimo o no. 
 
-\section{Toma de requerimientos-análisis- desarrollo-planificación}
+Esta elección se ve basada en la necedidad que tiene un profesor de identificar el aprendizaje de los alumnos en instancias anteriores a controles y solemnes, para así poder enfocar la clase y reforzar en los contenidos más debiles. Las herramientas que  existen para este acometido son escasas y poco usadas en nuestro entorno universitario, por esto queremos acercar y proveer de un sistema de opinión sencillo y fácil de usar, con la esperanza que sea usado en la universidad.
 
+\section{Requerimientos}
 
+\subsection{Visión General}
+Planteamos desarrollar una herramienta que permita, a través de la camara ubicada en el laboratorio de informática, hacer encuestas y obtener las respuestas en tiempo real, detectando las manos alzadas de los alumnos, ya sea de manera anónima o con identificación y presentar los resultados de forma automática, el contador de votos y el detalle de estos. Además, se debe poder realizar preguntas, de una manera sencilla y facil de usar, para poder medir el aprendizaje de los alumnos en la sala.
 
-\section{Marco Teorico}
+\subsection{Requerimientos funcionales (RF)}
+La tabla \ref{tabla1} muestra los requerimientos funcionales del proyecto.
+
+\begin{table}[H]
+\caption{Requerimientos funcionales.}
+\label{tabla1}
+\begin{center}
+{\tt
+\begin{tabular}{|c|c|c|}\hline
+C\'odigo &Nombre &Descripci\'on \\\hline \hline
+RF1 &Diferenciar personas & El sistema es capaz  \\ 
+						& & de diferenciar una  \\ 
+						& & persona de cualquier \\ 
+						& & otro objeto presente \\
+						& & en la sala. \\\hline
+RF2 &Identificar personas & El sistema es capaz  \\ 
+						& & de identificar una  \\ 
+						& & persona desde una \\ 
+						& & base de datos.\\\hline
+RF3 &Distinguir mano alzada& Lograr diferenciar  \\ 
+						& & cuando hay una mano  \\ 
+						& & alzada dentro de  \\ 
+						& & la sala.\\\hline
+RF4 &Asignar mano alzada& Reconocer a que \\ 
+						& & persona pertenece  \\ 
+						& & la mano levantada. \\\hline	
+RF5 &Contar cantidad manos& El sistema discrimina  \\ 
+						& & si una persona \\ 
+						& & levanta ambas manos. \\\hline	
+RF6 &Contar votos & Contar cuantas personas  \\ 
+						& & hicieron una votación. \\\hline										
+
+\end{tabular}
+}
+\end{center}
+\end{table}
+
+\subsection{Requerimientos no funcionales (RNF)}
+
+ La tabla \ref{tabla2} muestra los requerimientos no funcionales del proyecto.
+
+\begin{table}[H]
+\caption{Requerimientos no funcionales.}
+\label{tabla2}
+\begin{center}
+{\tt
+\begin{tabular}{|c|c|c|}\hline
+C\'odigo &Nombre &Descripci\'on \\\hline \hline
+RNF1 &Hacer encuesta& Se le permite al  \\ 
+						& & usuario crear una  \\ 
+						& & encuesta o pregunta \\ 
+						& & para ser respondida.\\\hline
+RNF2 &Ingresar alternativas &El usuario ingresa  \\ 
+						& & las alternativas que  \\ 
+						& & se pondrán a elección.\\\hline
+RNF3 &Recopilar respuestas& Por cada alternativa  \\ 
+						& & se recogen los datos  \\ 
+						& & observados por la   \\ 
+						& & cámara.\\\hline
+RNF4 &Analizar resultados& Procesar los datos \\ 
+						& & que se recogieron  \\ 
+						& & para identificar los \\
+						& & aciertos y errores. \\\hline	
+RNF5 &Mostrar resultados& Mostrar gráficas\\ 
+						& & de los datos analizados.\\\hline	
+								
+
+\end{tabular}
+}
+\end{center}
+\end{table}
+
+\section{Análisis}
+
+La cámara captura imágenes por cuadros, los cuales son analizados y comparados para determinar si hay cambios dentro de la visual de esta y contrastar esa detección de movimiento contra el fondo estático reconocido como fondo de antemano.
+
+Al recopilar la información obtenida por la cámara, se compararán ciertos espacios en la imágen demarcados por recuadros ubicados estrategicamente de manera tal que localizará una mano alzada ante una votación propuesta o note la presencia de una persona sin haber alzado su mano. 
+
+Dentro de estos cuadros se verán las manos alzadas por los votantes y se hará un conteo de manos que aparezcan en los cuadros vs las manos que no aparezcan, se registrará este conteo y guardará la información de forma que el encuestador pueda ver la diferencia de votos a favor y en contra. Todo este proceso se llevará a cabo como se muestra en el siguiente diagrama de casos de uso.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{UseCaseDiagram}
+  \caption{Diagrama casos de uso.}
+  \label{fig:sim2}
+\end{figure}
+
+\section{Marco Teórico}
 
 Hemos decidido optar por la estrategia de desarrollo ágil SCRUM, en lugar de planificar y ejecutar de una sola vez el proyecto, dado que nos otorga un trabajo mas rápido y optimizado. 
 
@@ -390,7 +480,7 @@ En cuanto a desarrollo lo que utilizamos fue el lenguaje C++ debido a que gracia
 
 
 \section{Discusión}
-La discusión básicamente fue mas orientada mas a la elección del proyecto a desarrollar que a las estrategias a utilizar. Se evaluaron factores de dificultad pero también áreas de interés de cada uno, eligiendo finalmente este proyecto de conteo automático de votos
+La discusión básicamente fue mas orientada mas a la elección del proyecto a desarrollar que a las estrategias a utilizar. Se evaluaron factores de dificultad pero también áreas de interés de cada uno, eligiendo finalmente este proyecto de conteo automático de votos.
 
 \section{Conclusión}
 En conclusión, logramos concretizar los requerimientos que el cliente planteó para desarrollar el programa y resolver su problema, formalizamos también el enunciado, para entender lo que debíamos hacer y poder avanzar con las siguientes etapas dl proyecto.
@@ -401,6 +491,14 @@ El análisis y desarrollo se baso en la implementación de métodos y algoritmos
 
 Finalmente las fechas de reuniones y metas a lograr en distintas fechas estan fijadas(estas son independientes y buscan cumplir con las fechas estipuladas) en una carta Gantt con la finalidad de entregar un proyecto integro al final de nuestro proceso de trabajo.
 
+\newpage
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=1\linewidth]{Encuestamatic}
+  \caption{Carta gantt.}
+  \label{fig:sim2}
+\end{figure*}
 % Referencias
 
 % can use a bibliography generated by BibTeX as a .bbl file
